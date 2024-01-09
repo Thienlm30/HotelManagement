@@ -1,6 +1,8 @@
 
 package GUI.UI;
 
+import Bussiness.Service.HotelService;
+
 public class HotelManagement {
 
     public static void main(String[] args) {
@@ -16,34 +18,38 @@ public class HotelManagement {
         menu.addOption("Save to file");
         menu.addOption("Others Quit");
         
-        int choice = 0;
+        HotelService h = new HotelService();
+        //h.loadData();
+        
+        int choice;
         do {
             menu.printMenu();
             choice = menu.getChoice();
-            
             switch (choice) {
                 case 1:
-                    
+                    h.addHotel();
                     break;
                 case 2:
-                    
+                    h.checkExitHotel();
                     break;
                 case 3:
                     
                     break;
+                case 4:
                     
-                    
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    h.saveToFile();
+                    break;    
                 default:
-                    throw new AssertionError();
+                    break;
             }  
         } while (choice > 0 && choice < 8);
-        
-        
-        
-        
-        
-        
-        
+
     }
     
 }

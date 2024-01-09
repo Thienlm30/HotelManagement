@@ -7,17 +7,18 @@ import java.util.List;
 public class HotelDAO {
     
     private final FileManagement fm;
-
+    
     public HotelDAO() {
         fm = new FileManagement();
     }
     
-    public boolean loadDataFromFile(List<Hotel> hotel ,String fName){
-        return fm.loadFromFile(hotel, fName);
+    public boolean loadFromFile(List<Hotel> listFile ,String fileName){
+        // listFile.clear();
+        return fm.loadFromFile(listFile, fileName);
     }
     
-    public boolean saveDataFromFile(List<Hotel> hotel,String fName){
-        return fm.saveToFile(hotel, fName, "Product save file successfull!");
+    public boolean saveToFile(List<Hotel> listBuffer, String fileName, String msg){
+        return fm.saveToFile(listBuffer, fileName, msg);
     }
     
     

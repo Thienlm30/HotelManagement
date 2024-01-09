@@ -12,60 +12,37 @@ import java.util.List;
 
 public class FileManagement {
 
-    public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
+     public <T> boolean loadFromFile (List<T> list, String fileName) {
+        list.clear();
         File f = new File(fileName);
-        if (!f.exists()) {
+        if(!f.exists()) 
             return false;
-        }
-        try {
-            ObjectOutputStream o;
-            try (FileOutputStream fos = new FileOutputStream(f)) {
-                o = new ObjectOutputStream(fos);
-                for (T item : list) {
-                    o.writeObject(item);
+        try (FileInputStream fis = new FileInputStream(f); 
+                ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            if (f.length() == 0) {
+                System.err.println("File is empty");
+            }
+
+            boolean check = true;
+            while (check) {
+                try {
+                    T c = (T) ois.readObject();
+                    list.add(c);
+                } catch (EOFException e) {
+                    break;
                 }
             }
-            o.close();
-            System.out.println(msg);
-            return true;        // Indicates a successful save
-        } catch (IOException e) {
-            System.out.println(e);
-            return false;
-        }
-    }
-    
-    public <T> boolean loadFromFile(List<T> list, String fileName) {
-        try {
-            // check file exists
-            File f = new File(fileName);
-            if (!f.exists()) {
-                return false;
-            }
-            ObjectInputStream oi;
-            try ( // read file
-                    FileInputStream fis = new FileInputStream(f)) {
-                oi = new ObjectInputStream(fis);
-                if (f.length() == 0) {
-                    System.err.println("File is empty");
-                }   boolean check = true;
-                while (check) {
-                    try {
-                        T c = (T) oi.readObject();
-                        list.add(c);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-            }
-            oi.close();
+            ois.close();
+            fis.close();
         } catch (FileNotFoundException e) {
-            // log error or throw exception
             System.err.println("File not found: " + fileName);
             return false;
         } catch (IOException | ClassNotFoundException e) {
-            // log error or throw exception
-            System.err.println("Error reading from file: " + fileName + e);
-            return false;
+            if (f.length() != 0) {
+                System.err.println("Error reading from file: " + fileName + " " + e);
+                return false;
+            } 
         } catch (NumberFormatException e) {
             // log error or throw exception
             System.err.println("Error parsing double value from input: " + e.getMessage());
@@ -74,4 +51,31 @@ public class FileManagement {
         return true;
     }
 
+     public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
+        File f = new File(fileName);
+        if(!f.exists()) {
+            System.out.println("Empty list");
+            return false;
+        }
+        try {
+            ObjectOutputStream fileOut;
+            try (FileOutputStream fos = new FileOutputStream(f)) {
+                fileOut = new ObjectOutputStream(fos);
+                for (T item : list) {
+                    fileOut.writeObject(item);
+                }
+            fileOut.close();
+            fos.close();
+            }
+            System.out.println(msg);
+            return true; // Indicates a successful save
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+     
+     
+     
+     
 }

@@ -1,7 +1,12 @@
 
 package Bussiness.DTO;
 
-public class Hotel implements Comparable<Hotel>{
+import java.io.Serializable;
+
+
+// implement Serializable to be written to an "ObjectOutputStream" 
+// in FileManagement class in Bussiness.Service package
+public class Hotel implements Serializable, Comparable<Hotel>{
     
     private String id;
     private String name;
@@ -68,14 +73,20 @@ public class Hotel implements Comparable<Hotel>{
 
     @Override
     public String toString() {
-        return String.format("|%^4s|%^20s|%^14d|%^40s|%^10s|%^6s|", 
+        return String.format("|%4s|%20s|%14d|%40s|%10s|%6s|", 
                 id, name, roomAvailable, 
                 address, phone, (rating + " star"));
     }
     
     @Override
-    public int compareTo(Hotel that) {
-        return this.id.compareToIgnoreCase(that.id);
+    public int compareTo(Hotel o) {
+        if (this.getId().compareTo(o.getId()) > 0){
+            return 1;
+        } else if (this.getId().compareTo(o.getId()) < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
     
 }
