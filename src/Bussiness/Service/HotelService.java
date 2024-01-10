@@ -8,6 +8,7 @@ import DataLayer.DAO.HotelDAO;
 import GUI.Uitilities.MyUitil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class HotelService implements IHotelService{
     
@@ -71,7 +72,43 @@ public class HotelService implements IHotelService{
 
     @Override
     public void updateHotel() {
-        
+        String id, name, address, phone;
+        int room, rate;
+        id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ", 
+                    "ID must be Hxx (x is a number)", "H\\d{2}");
+        if (!SearchData.searchById(listBuffer, listFile, id)) 
+                System.out.println("No Hotel Found!");
+        else {
+            Hotel h = SearchData.SearchById(listBuffer, listFile, id);
+            
+            name = MyUitil.getStrCanBlank("Enter new name: ");
+            if (name.matches("\\s+")) name = h.getName();
+            else name = MyUitil.normolizeStr(name);
+            
+            System.out.print("Enter new room: ");
+            room = Integer.parseInt(new Scanner(System.in).nextLine());
+            
+            
+            address = MyUitil.getStrCanBlank("Enter new address: ");
+            if (address.matches("\\s+")) address = h.getAddress();
+            else address = MyUitil.normolizeStr(address);
+            
+            phone = MyUitil.getStrCanBlank("Enter new phone: ");
+            if (phone.matches("\\s+")) phone = h.getPhone();
+            else if (!(phone.matches("0\\d{9}"))) {
+                System.err.println("Phone number must have ten number");
+                phone = MyUitil.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
+                "Phone number must have ten number", "0\\d{9}");
+            }
+            
+            rate = MyUitil.getStrCanBlank("Enter new rate: ");
+            
+            
+            if (SearchData.searchById(listBuffer, id) != null) {
+                listBuffer.set(listBuffer.indexOf(h), new Hotel(id, name,
+                                room, address, phone, rate));
+            }
+        }
     }
 
     @Override

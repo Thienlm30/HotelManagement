@@ -17,4 +17,24 @@ public class SearchData {
         return false;
     }
     
+    public static Hotel searchById(List<Hotel> list, String id) {
+        for (Hotel h : list) {
+            if (id.equalsIgnoreCase(h.getId())) return h;
+        }
+        return null;
+    }
+        
+    public static Hotel SearchById(List<Hotel> listBuffer, List<Hotel> listFile, String id) {
+
+        for (Hotel h : listBuffer) {
+            if (h.getId().equalsIgnoreCase(id))
+                return h;
+        }
+        
+        for (Hotel h : listFile) {
+            if (h.getId().equalsIgnoreCase(id))
+                return h;
+        }
+        return null;
+    }
 }

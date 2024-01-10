@@ -76,6 +76,12 @@ public class MyUitil {
             }
         }
     }
+    
+    public static String getStrCanBlank(String msg) {
+        String string = "";
+        System.out.print(msg);
+        return string;
+    }
 
     // Get pattern String Ex: ID, MSSV
     public static String getPatternString(String inputMsg, String errorMsg, String pattern) {

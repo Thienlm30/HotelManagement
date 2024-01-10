@@ -39,13 +39,16 @@ public class HotelManagement {
                     
                     break;
                 case 5:
+                    
                     break;
                 case 6:
+                    
                     break;
                 case 7:
                     h.saveToFile();
-                    break;    
+                    break;
                 default:
+                    System.out.println("Bye Bye!");
                     break;
             }  
         } while (choice > 0 && choice < 8);
