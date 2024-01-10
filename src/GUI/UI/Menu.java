@@ -8,8 +8,9 @@ import GUI.Uitilities.MyUitil;
 // class Menu
 public class Menu {
     
-    private String menuTitle;
-    private ArrayList<String> optionList = new ArrayList<String>();
+    private final String menuTitle;
+    private final ArrayList<String> optionList = new ArrayList<>();
+
     
     public Menu(String menuTitle) {
         this.menuTitle = menuTitle;
@@ -43,6 +44,10 @@ public class Menu {
             printRegex(optionList.get(i), " ");
             System.out.println(" |");
         }
+        for (int i = 0; i <= getSizeMenu() + 6; i++) {
+            System.out.print("-");
+        }
+        System.out.println("");
     }
     
     private int getSizeMenu() {
@@ -55,8 +60,10 @@ public class Menu {
     
     private void printRegex(String str, String regax) {
         for (int i = 0; i < (getSizeMenu() - str.length()); i++) {
-            System.out.print(" ");
+            System.out.print(regax);
         }
     }
+    
+    
     
 }

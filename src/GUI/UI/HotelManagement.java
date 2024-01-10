@@ -33,7 +33,7 @@ public class HotelManagement {
                     h.checkExitHotel();
                     break;
                 case 3:
-                    
+                    h.updateHotel();
                     break;
                 case 4:
                     
@@ -42,7 +42,7 @@ public class HotelManagement {
                     
                     break;
                 case 6:
-                    
+                    h.display();
                     break;
                 case 7:
                     h.saveToFile();

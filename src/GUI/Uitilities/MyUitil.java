@@ -80,6 +80,7 @@ public class MyUitil {
     public static String getStrCanBlank(String msg) {
         String string = "";
         System.out.print(msg);
+        string = sc.nextLine();
         return string;
     }
 
@@ -107,7 +108,6 @@ public class MyUitil {
                 return false;
             } else {
                 System.err.println("Must be Y or N");
-                continue;
             }
         }
     }

@@ -73,9 +73,9 @@ public class Hotel implements Serializable, Comparable<Hotel>{
 
     @Override
     public String toString() {
-        return String.format("|%4s|%20s|%14d|%40s|%10s|%6s|", 
-                id, name, roomAvailable, 
-                address, phone, (rating + " star"));
+        return String.format("|%-4s|%-20s|%14d|%-57s|%-10s|%6s|\n", 
+                id, name, roomAvailable, address, 
+                phone, (rating + " star"));
     }
     
     @Override
