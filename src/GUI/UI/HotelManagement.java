@@ -7,7 +7,7 @@ public class HotelManagement {
 
     public static void main(String[] args) {
         
-        Menu menu = new Menu("Hotel Management");
+        Menu menu = new Menu("The Hotel Management");
         
         menu.addOption("Adding new Hotel");
         menu.addOption("Checking exits Hotel");

@@ -30,10 +30,32 @@ public class Menu {
     
     // use for main menu and sub-menu
     public void printMenu() {
-        System.out.println("\n------------------------------------");
-        System.out.println("Welcome to " + menuTitle);
+        
+        for (int i = 0; i <= getSizeMenu() + 6; i++) {
+            System.out.print("-");
+        }
+        System.out.println("");
+        System.out.print("| Welcome to " + menuTitle);
+        printRegex("Welcome to" + menuTitle," ");
+        System.out.println( "   |");
         for (int i = 0; i<optionList.size(); i++) {
-            System.out.println((i+1) + ") " + optionList.get(i) + ".");
+            System.out.print( "| " + (i+1) + ") " + optionList.get(i));
+            printRegex(optionList.get(i), " ");
+            System.out.println(" |");
+        }
+    }
+    
+    private int getSizeMenu() {
+        int max = menuTitle.length() + 10; // 10 character of "Welcome to"
+        for (String opt : optionList) {
+            if (opt.length() > max) max = opt.length();
+        }
+        return max;
+    }
+    
+    private void printRegex(String str, String regax) {
+        for (int i = 0; i < (getSizeMenu() - str.length()); i++) {
+            System.out.print(" ");
         }
     }
     

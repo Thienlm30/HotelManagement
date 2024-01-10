@@ -76,9 +76,7 @@ public class HotelService implements IHotelService{
             if (roomS.matches("\\s+") || roomS.length() == 0) room = h.getRoomAvailable();
             else if (roomS.matches("\\d+")) room = Integer.parseInt(roomS);
             else room = DataValuation.inputRoom();
-            
-            
-            
+
             address = MyUitil.getStrCanBlank("Enter new address: ");
             if (address.matches("\\s+") || address.length() == 0) address = h.getAddress();
             else address = MyUitil.normolizeStr(address);
@@ -97,12 +95,18 @@ public class HotelService implements IHotelService{
             if (rate < 1 || rate > 6) rate = MyUitil.getInteger("Enter rating (1...6 star): ", 
                 "Rating must an integer from 1 to 6 star", 1, 6);
             
-            
             if (SearchData.searchById(listBuffer, id) != null) {
                 listBuffer.set(listBuffer.indexOf(h), new Hotel(id, name,
                                 room, address, phone, rate));
             }
+            else if (SearchData.searchById(listFile, id) != null) {
+                listFile.set(listFile.indexOf(h), new Hotel(id, name,
+                                room, address, phone, rate));
+            }
+            
+            
         }
+        
     }
 
     @Override
