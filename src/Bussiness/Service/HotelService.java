@@ -8,7 +8,6 @@ import DataLayer.DAO.HotelDAO;
 import GUI.Uitilities.MyUitil;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class HotelService implements IHotelService{
     
@@ -28,18 +27,6 @@ public class HotelService implements IHotelService{
             addHotel();
         }
     }
-    
-//    public void loadData() {
-//        
-//    }
-
-    // public void loadData() {
-    //     try {
-    //         HotelDAO.loadDataFromFile(listFile, "Hotel.dat");
-    //     } catch (Exception e) {
-    //         System.err.println(e.getMessage());
-    //     }
-    // }
     
     @Override
     public void addHotel() {
@@ -72,8 +59,8 @@ public class HotelService implements IHotelService{
 
     @Override
     public void updateHotel() {
-        String id, name, address, phone;
-        int room, rate;
+        String id, name, address, phone, roomS, rateS;
+        int room, rate = 0;
         id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ", 
                     "ID must be Hxx (x is a number)", "H\\d{2}");
         if (!SearchData.searchById(listBuffer, listFile, id)) 
@@ -82,26 +69,33 @@ public class HotelService implements IHotelService{
             Hotel h = SearchData.SearchById(listBuffer, listFile, id);
             
             name = MyUitil.getStrCanBlank("Enter new name: ");
-            if (name.matches("\\s+")) name = h.getName();
+            if (name.matches("\\s+") || name.length() == 0) name = h.getName();
             else name = MyUitil.normolizeStr(name);
             
-            System.out.print("Enter new room: ");
-            room = Integer.parseInt(new Scanner(System.in).nextLine());
+            roomS = MyUitil.getStrCanBlank("Enter new available room: ");
+            if (roomS.matches("\\s+") || roomS.length() == 0) room = h.getRoomAvailable();
+            else if (roomS.matches("\\d+")) room = Integer.parseInt(roomS);
+            else room = DataValuation.inputRoom();
+            
             
             
             address = MyUitil.getStrCanBlank("Enter new address: ");
-            if (address.matches("\\s+")) address = h.getAddress();
+            if (address.matches("\\s+") || address.length() == 0) address = h.getAddress();
             else address = MyUitil.normolizeStr(address);
             
             phone = MyUitil.getStrCanBlank("Enter new phone: ");
-            if (phone.matches("\\s+")) phone = h.getPhone();
+            if (phone.matches("\\s+") || phone.length() == 0) phone = h.getPhone();
             else if (!(phone.matches("0\\d{9}"))) {
                 System.err.println("Phone number must have ten number");
                 phone = MyUitil.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
                 "Phone number must have ten number", "0\\d{9}");
             }
             
-            rate = MyUitil.getStrCanBlank("Enter new rate: ");
+            rateS = MyUitil.getStrCanBlank("Enter new rate: ");
+            if (rateS.matches("\\s+") || rateS.length() == 0) rate = h.getRating();
+            else if (rateS.matches("\\d{1}")) room = Integer.parseInt(rateS);
+            if (rate < 1 || rate > 6) rate = MyUitil.getInteger("Enter rating (1...6 star): ", 
+                "Rating must an integer from 1 to 6 star", 1, 6);
             
             
             if (SearchData.searchById(listBuffer, id) != null) {
