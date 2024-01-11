@@ -12,12 +12,13 @@ import java.util.List;
 
 public class FileManagement {
 
-     public <T> boolean loadFromFile (List<T> list, String fileName) {
+    public <T> boolean loadFromFile(List<T> list, String fileName) {
         list.clear();
         File f = new File(fileName);
-        if(!f.exists()) 
+        if (!f.exists()) {
             return false;
-        try (FileInputStream fis = new FileInputStream(f); 
+        }
+        try (FileInputStream fis = new FileInputStream(f);
                 ObjectInputStream ois = new ObjectInputStream(fis)) {
 
             if (f.length() == 0) {
@@ -42,7 +43,7 @@ public class FileManagement {
             if (f.length() != 0) {
                 System.err.println("Error reading from file: " + fileName + " " + e);
                 return false;
-            } 
+            }
         } catch (NumberFormatException e) {
             // log error or throw exception
             System.err.println("Error parsing double value from input: " + e.getMessage());
@@ -51,31 +52,32 @@ public class FileManagement {
         return true;
     }
 
-     public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
-        File f = new File(fileName);
-        if(!f.exists()) {
-            System.out.println("Empty list");
-            return false;
-        }
+    public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
+
         try {
+
+            File f = new File(fileName);
+            if (!f.exists()) {
+                System.out.println("Empty list");
+                return false;
+            }
+
             ObjectOutputStream fileOut;
             try (FileOutputStream fos = new FileOutputStream(f)) {
                 fileOut = new ObjectOutputStream(fos);
                 for (T item : list) {
                     fileOut.writeObject(item);
                 }
-            fileOut.close();
-            fos.close();
+                fileOut.close();
+                fos.close();
+                System.out.println(msg);
+                return true; // Indicates a successful save
             }
-            System.out.println(msg);
-            return true; // Indicates a successful save
         } catch (IOException e) {
             System.out.println(e);
-            return false;
+            
         }
+        return false;
     }
-     
-     
-     
-     
+
 }

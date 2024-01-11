@@ -12,12 +12,12 @@ public class DataValuation {
     
     public static Scanner sc = new Scanner(System.in);
     
-    public static String inputID(List<Hotel> listBuffer, List<Hotel> listFile) {
+    public static String inputID(List<Hotel> listFile) {
         String id = "";
         try {
             id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ", 
                     "ID must be Hxx (x is a number)", "H\\d{2}");
-            if (SearchData.searchById(listBuffer, listFile, id)) 
+            if (SearchData.searchById(listFile, id)) 
                     throw new Exception("ID dulpicated");
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -47,7 +47,6 @@ public class DataValuation {
     public static int inputRate() {
         return MyUitil.getInteger("Enter rating (1...6 star): ", 
                 "Rating must an integer from 1 to 6 star", 1, 6);
-    }
-    
+    }    
     
 }

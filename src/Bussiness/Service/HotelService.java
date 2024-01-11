@@ -6,17 +6,20 @@ import Bussiness.DTO.Hotel;
 import DataLayer.DAO.HotelDAO;
 import GUI.Uitilities.MyUitil;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class HotelService implements IHotelService {
 
-    private List<Hotel> listBuffer = new ArrayList<>();
+    //private List<Hotel> listBuffer = new ArrayList<>();
     private List<Hotel> listFile = new ArrayList<>();
+    private String pathFile;
 
-    public HotelService() {
+    public HotelService(String fileName) {
         HotelDAO h = new HotelDAO();
+        this.pathFile = fileName;
         try {
-            h.loadFromFile(listFile, "Hotel.dat");
+            h.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -33,13 +36,14 @@ public class HotelService implements IHotelService {
         int room, rate;
         do {
             System.out.println("Please enter new hotel information!");
-            id = DataValuation.inputID(listBuffer, listFile);
+            id = DataValuation.inputID(listFile);
             name = DataValuation.inputName();
             room = DataValuation.inputRoom();
             address = DataValuation.inputAddress();
             phone = DataValuation.inputPhone();
             rate = DataValuation.inputRate();
-            listBuffer.add(new Hotel(id, name, room, address, phone, rate));
+            listFile.add(new Hotel(id, name, room, address, phone, rate));
+            saveToFile();
         } while (MyUitil.getYN("Do you want to add new Hotel? (Y/N): "));
     }
 
@@ -50,7 +54,7 @@ public class HotelService implements IHotelService {
         do {
             id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ",
                     "ID must be Hxx (x is a number)", "H\\d{2}");
-            if (!SearchData.searchById(listBuffer, listFile, id)) {
+            if (!SearchData.searchById(listFile, id)) {
                 System.out.println("No Hotel Found!");
             } else {
                 System.out.println("Exist  Hotel");
@@ -64,10 +68,10 @@ public class HotelService implements IHotelService {
         int room, rate = 0;
         id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
-        if (!SearchData.searchById(listBuffer, listFile, id)) {
+        if (!SearchData.searchById(listFile, id)) {
             System.out.println("No Hotel Found!");
         } else {
-            Hotel h = SearchData.SearchById(listBuffer, listFile, id);
+            Hotel h = SearchData.searchHotelById(listFile, id);
 
             name = MyUitil.getStrCanBlank("Enter new name: ");
             if (name.matches("\\s+") || name.length() == 0) {
@@ -93,7 +97,7 @@ public class HotelService implements IHotelService {
             }
 
             phone = MyUitil.getStrCanBlank("Enter new phone: ");
-            if (phone.matches("\\s+") || phone.length() == 0) {
+            if (phone.trim().length() == 0) {
                 phone = h.getPhone();
             } else if (!(phone.matches("0\\d{9}"))) {
                 System.err.println("Phone number must have ten number");
@@ -112,36 +116,47 @@ public class HotelService implements IHotelService {
                 }
             }
 
-            if (SearchData.searchById(listBuffer, id) != null) {
-                listBuffer.set(listBuffer.indexOf(h), new Hotel(id, name,
-                        room, address, phone, rate));
+            
+            if (SearchData.searchHotelById(listFile, id) != null) {
+                h.setName(name);
+                h.setAddress(address);
+                h.setPhone(phone);
+                h.setRating(rate);
+                h.setRoomAvailable(room);
                 List<Hotel> listOut = new ArrayList<>();
-                listOut.add(SearchData.searchById(listBuffer, id));
+                listOut.add(SearchData.searchHotelById(listFile, id));
                 printFormat(listOut);
-            } else if (SearchData.searchById(listFile, id) != null) {
-                listFile.set(listFile.indexOf(h), new Hotel(id, name,
-                        room, address, phone, rate));
-                saveToFile();
-                List<Hotel> listOut = new ArrayList<>();
-                listOut.add(SearchData.searchById(listFile, id));
-                printFormat(listOut);
-            }
+            } 
         }
 
     }
 
     @Override
     public void deleteHotel() {
-
+        String id;
+        id = MyUitil.getPatternString("Enter ID like Hxx to delete: ", 
+                    "ID must be Hxx (x is a number)", "H\\d{2}");
+        Hotel h = SearchData.searchHotelById(listFile, id);
+        if (h == null) System.out.println("No Hotel Found");
+        else if (MyUitil.getYN("Do you ready want to delete this hote? (Y/N)")) {
+            listFile.remove(h);
+            saveToFile();
+        }
     }
 
     @Override
     public void searchHotel() {
-
+        
     }
 
     @Override
     public void display() {
+        HotelDAO h = new HotelDAO();
+        try {
+            h.loadFromFile(listFile, "Hotel.dat");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         if (listFile.isEmpty()) {
             System.out.println("No Hotel Found");
             return;
@@ -151,23 +166,30 @@ public class HotelService implements IHotelService {
     }
 
     public void saveToFile() {
-        HotelDAO hd = new HotelDAO();
-        hd.saveToFile(listBuffer, "Hotel.dat", "Saved successfully!");
+        HotelDAO h = new HotelDAO();
+        h.saveToFile(listFile, pathFile, "Saved to file successfully!");
+        //h.loadFromFile(listFile, pathFile);
     }
-
+    
     private void printFormat(List<Hotel> list) {
         for (int i = 0; i < 118; i++) {
             System.out.printf("-");
         }
         System.out.println("");
+        //
+        //
         System.out.printf("| ID |%8s%4s%8s|Room Available|%25s%7s%25s|   Phone  |Rating|\n", " ", "Name", " ", " ", "Address", " ", "Phone", "Rating");
         for (int i = 0; i < 118; i++) {
             System.out.printf("-");
         }
         System.out.println("");
-        for (Hotel h : list) {
+        //
+        //
+        list.forEach((h) -> {
             System.out.println(h.toString());
-        }
+        });
+        //
+        //
         for (int i = 0; i < 118; i++) {
             System.out.print("-");
         }

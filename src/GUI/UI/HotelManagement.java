@@ -15,11 +15,9 @@ public class HotelManagement {
         menu.addOption("Deleting Hotel");
         menu.addOption("Searching Hotel");
         menu.addOption("Displaying a hotel list (descending by Hotel_Name)");
-        menu.addOption("Save to file");
         menu.addOption("Others Quit");
         
-        HotelService h = new HotelService();
-        //h.loadData();
+        HotelService h = new HotelService("./Hotel.dat");
         
         int choice;
         do {
@@ -36,22 +34,19 @@ public class HotelManagement {
                     h.updateHotel();
                     break;
                 case 4:
-                    
+                    h.deleteHotel();
                     break;
                 case 5:
-                    
+                    h.searchHotel();
                     break;
                 case 6:
                     h.display();
-                    break;
-                case 7:
-                    h.saveToFile();
                     break;
                 default:
                     System.out.println("Bye Bye!");
                     break;
             }  
-        } while (choice > 0 && choice < 8);
+        } while (choice > 0 && choice < 7);
 
     }
     

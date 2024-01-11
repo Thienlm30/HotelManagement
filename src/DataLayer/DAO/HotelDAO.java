@@ -13,7 +13,7 @@ public class HotelDAO {
     }
     
     public boolean loadFromFile(List<Hotel> listFile ,String fileName){
-        // listFile.clear();
+        //listFile.clear();
         return fm.loadFromFile(listFile, fileName);
     }
     
