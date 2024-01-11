@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import GUI.Uitilities.MyUitil;
 
 
-// class Menu
+/**
+ * This class execute all about Menu
+ * @author Thienlm30
+ */
 public class Menu {
     
     private final String menuTitle;
@@ -15,13 +18,19 @@ public class Menu {
     public Menu(String menuTitle) {
         this.menuTitle = menuTitle;
     }
-    
+    /**
+     * This function add option of Menu to the optionList
+     * @param newOption developer will add option in main function
+     */
     public void addOption(String newOption) {
         // newOption valuation
         optionList.add(newOption);
     }
     
-    // use for main menu and sub-menu
+    /**
+     * This function can use for main menu and sub-menu to get choice from User
+     * @return number from 1 to number of max options
+     */
     public int getChoice() {
         int maxOption = optionList.size();
         String inputMsg = "Choose [1.." + maxOption + "]: ";
@@ -29,7 +38,10 @@ public class Menu {
         return MyUitil.getInteger(inputMsg, errorMsg, 1, maxOption);
     }
     
-    // use for main menu and sub-menu
+    /**
+     * This function will print Menu
+     * Can be use for many menu
+     */
     public void printMenu() {
         
         for (int i = 0; i <= getSizeMenu() + 6; i++) {
@@ -50,6 +62,10 @@ public class Menu {
         System.out.println("");
     }
     
+    /**
+     * This function will support the printMenu function
+     * @return the max length of the menu
+     */
     private int getSizeMenu() {
         int max = menuTitle.length() + 10; // 10 character of "Welcome to"
         for (String opt : optionList) {
@@ -58,12 +74,16 @@ public class Menu {
         return max;
     }
     
+    /**
+     * This function will support the printMenu function
+     * This will print the top and the end of Menu board
+     * @param str
+     * @param regax 
+     */
     private void printRegex(String str, String regax) {
         for (int i = 0; i < (getSizeMenu() - str.length()); i++) {
             System.out.print(regax);
         }
     }
-    
-    
     
 }

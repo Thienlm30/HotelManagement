@@ -10,9 +10,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+/**
+ * This class have funciton to save and access data of Oject from file
+ * This class can be reuse in other project
+ * @author Thienlm30
+ */
 public class FileManagement {
 
-    public <T> boolean loadFromFile(List<T> list, String fileName) {
+    public static <T> boolean loadFromFile(List<T> list, String fileName) {
         list.clear();
         File f = new File(fileName);
         if (!f.exists()) {
@@ -52,7 +57,7 @@ public class FileManagement {
         return true;
     }
 
-    public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
+    public static <T> boolean saveToFile(List<T> list, String fileName, String msg) {
 
         try {
 

@@ -1,14 +1,22 @@
 package GUI.Uitilities;
 
 import java.util.Scanner;
-
-// Class/Libary contain functions use for many project (Utilities)
-// Get Data from User in Presentation Layer
-// Valuation the input data from User
+/**
+ * This class (libary) contain functions use for many process (Utilities)
+ * Get data from User in Presentation Layer
+ * Valuation the input data from User
+ * @author Thienlm30
+ */
 public class MyUitil {
 
     private static Scanner sc = new Scanner(System.in);
-
+    
+    /**
+     * This function allow User enter an integer
+     * @param inputMsg 
+     * @param errorMsg
+     * @return 
+     */
     public static int getInteger(String inputMsg, String errorMsg) {
         int n;
         do {
@@ -21,9 +29,17 @@ public class MyUitil {
             }
         } while (true);
     }
-
+    
+    /**
+     * This function allow User enter an integer in range
+     * @param inputMsg
+     * @param errorMsg
+     * @param min LowerBound
+     * @param max UpperBound
+     * @return 
+     */
     public static int getInteger(String inputMsg, String errorMsg, int min, int max) {
-        int n = 0;
+        int n;
         do {
             try {
                 System.out.print(inputMsg);
@@ -37,7 +53,14 @@ public class MyUitil {
             }
         } while (true);
     }
-
+    
+    /** 
+     * This function allow User enter an integer bigger than a value
+     * @param inputMsg
+     * @param errorMsg
+     * @param min
+     * @return 
+     */
     public static int getInteger(String inputMsg, String errorMsg, int min) {
         int n;
 
@@ -88,7 +111,14 @@ public class MyUitil {
         return string;
     }
 
-    // Get pattern String Ex: ID, MSSV
+    /**
+     * This function allow User enter a String match the format
+     * Example: ID, StudentID, Key,...
+     * @param inputMsg
+     * @param errorMsg
+     * @param pattern the format of data User input
+     * @return 
+     */
     public static String getPatternString(String inputMsg, String errorMsg, String pattern) {
         String string = "";
         do {
@@ -100,7 +130,12 @@ public class MyUitil {
         } while (!string.matches(pattern));
         return string;
     }
-
+    
+    /**
+     * This function get Yes or No from User to continue or not
+     * @param msg
+     * @return True: Yes; False: No
+     */
     public static boolean getYN(String msg) {
         String choice;
         while (true) {

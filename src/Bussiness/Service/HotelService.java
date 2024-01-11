@@ -4,9 +4,9 @@ import Bussiness.Components.DataValuation;
 import Bussiness.Components.SearchData;
 import Bussiness.DTO.Hotel;
 import DataLayer.DAO.HotelDAO;
+import GUI.UI.Menu;
 import GUI.Uitilities.MyUitil;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class HotelService implements IHotelService {
@@ -16,10 +16,9 @@ public class HotelService implements IHotelService {
     private String pathFile;
 
     public HotelService(String fileName) {
-        HotelDAO h = new HotelDAO();
         this.pathFile = fileName;
         try {
-            h.loadFromFile(listFile, pathFile);
+            HotelDAO.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -65,7 +64,7 @@ public class HotelService implements IHotelService {
     @Override
     public void updateHotel() {
         String id, name, address, phone, roomS, rateS;
-        int room, rate = 0;
+        int room, rate;
         id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
         if (!SearchData.searchById(listFile, id)) {
@@ -116,17 +115,17 @@ public class HotelService implements IHotelService {
                 }
             }
 
-            
             if (SearchData.searchHotelById(listFile, id) != null) {
                 h.setName(name);
                 h.setAddress(address);
                 h.setPhone(phone);
                 h.setRating(rate);
                 h.setRoomAvailable(room);
+                saveToFile();
                 List<Hotel> listOut = new ArrayList<>();
-                listOut.add(SearchData.searchHotelById(listFile, id));
+                listOut.add(h);
                 printFormat(listOut);
-            } 
+            }
         }
 
     }
@@ -134,11 +133,12 @@ public class HotelService implements IHotelService {
     @Override
     public void deleteHotel() {
         String id;
-        id = MyUitil.getPatternString("Enter ID like Hxx to delete: ", 
-                    "ID must be Hxx (x is a number)", "H\\d{2}");
+        id = MyUitil.getPatternString("Enter ID like Hxx to delete: ",
+                "ID must be Hxx (x is a number)", "H\\d{2}");
         Hotel h = SearchData.searchHotelById(listFile, id);
-        if (h == null) System.out.println("No Hotel Found");
-        else if (MyUitil.getYN("Do you ready want to delete this hote? (Y/N)")) {
+        if (h == null) {
+            System.out.println("No Hotel Found");
+        } else if (MyUitil.getYN("Do you ready want to delete this hote? (Y/N)")) {
             listFile.remove(h);
             saveToFile();
         }
@@ -146,14 +146,56 @@ public class HotelService implements IHotelService {
 
     @Override
     public void searchHotel() {
+        Menu menu = new Menu("Searching Hotel");
+        menu.addOption("Searching by Hotel_id");
+        menu.addOption("Searching by Hotel_name");
+        menu.addOption("Quit");
+
         
+        int choice;
+        do {
+            menu.printMenu();
+            choice = menu.getChoice();
+            List<Hotel> listBuffer ;
+            switch (choice) {
+                case 1:
+                    String id = MyUitil.getPatternString("Enter ID to search (Hxx): ", 
+                            "ID must be Hxx (x is a number)", "H\\d{2}");
+                    
+                    HotelDAO.loadFromFile(listFile, pathFile);
+                    listBuffer = new ArrayList<>();
+                    
+                    listBuffer.add(SearchData.searchHotelById(listFile, id));
+                    printFormat(listBuffer);
+                    
+                    break;
+                case 2:
+                    String name = MyUitil.getNonBlankString("Enter nanme to search: ",
+                            "Name can be blank");
+                    name = MyUitil.normolizeStr(name);
+                    
+                    listBuffer = new ArrayList<>();           
+                    HotelDAO.loadFromFile(listFile, pathFile);
+                    
+                    for (Hotel h : listFile) {
+                       if (h.getName().toLowerCase().contains(name.toLowerCase())) 
+                           listBuffer.add(h);
+                    }
+                    listBuffer.sort((h1,h2) -> h2.getId().compareToIgnoreCase(h1.getId()));
+                    printFormat(listBuffer);
+                    break;
+                default:
+                    System.out.println("Return to main menu");
+                    break;
+            }
+        } while (choice > 0 && choice < 3);
+
     }
 
     @Override
     public void display() {
-        HotelDAO h = new HotelDAO();
         try {
-            h.loadFromFile(listFile, pathFile);
+            HotelDAO.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -166,11 +208,10 @@ public class HotelService implements IHotelService {
     }
 
     public void saveToFile() {
-        HotelDAO h = new HotelDAO();
-        h.saveToFile(listFile, pathFile, "Saved to file successfully!");
+        HotelDAO.saveToFile(listFile, pathFile, "Saved to file successfully!");
         //h.loadFromFile(listFile, pathFile);
     }
-    
+
     private void printFormat(List<Hotel> list) {
         for (int i = 0; i < 118; i++) {
             System.out.printf("-");
@@ -185,9 +226,9 @@ public class HotelService implements IHotelService {
         System.out.println("");
         //
         //
-        list.forEach((h) -> {
+        for (Hotel h : list) {
             System.out.println(h.toString());
-        });
+        }
         //
         //
         for (int i = 0; i < 118; i++) {
