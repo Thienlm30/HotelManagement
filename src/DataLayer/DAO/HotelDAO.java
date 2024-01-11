@@ -10,17 +10,26 @@ import java.util.List;
  */
 public class HotelDAO {
     
-    
-    public HotelDAO() {
-    }
-    
-    public static boolean loadFromFile(List<Hotel> listFile ,String fileName){
+    /**
+     * This function load data of Hotel from file
+     * @param list
+     * @param fileName
+     * @return 
+     */
+    public static boolean loadFromFile(List<Hotel> list ,String fileName){
         //listFile.clear();
-        return FileManagement.loadFromFile(listFile, fileName);
+        return FileManagement.loadFromFile(list, fileName);
     }
     
-    public static boolean saveToFile(List<Hotel> listBuffer, String fileName, String msg){
-        return FileManagement.saveToFile(listBuffer, fileName, msg);
+    /**
+     * This function write data of Hotel to file
+     * @param list
+     * @param fileName
+     * @param msg
+     * @return 
+     */
+    public static boolean saveToFile(List<Hotel> list, String fileName, String msg){
+        return FileManagement.saveToFile(list, fileName, msg);
     }
     
     

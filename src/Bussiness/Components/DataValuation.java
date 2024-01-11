@@ -1,13 +1,16 @@
 
 package Bussiness.Components;
 
-// check duplicate input ID 
 
 import Bussiness.DTO.Hotel;
 import GUI.Uitilities.MyUitil;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class contain function to call function to input data
+ * @author Thienlm30
+ */
 public class DataValuation {
     
     public static Scanner sc = new Scanner(System.in);

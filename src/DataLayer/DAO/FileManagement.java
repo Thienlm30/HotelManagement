@@ -16,7 +16,15 @@ import java.util.List;
  * @author Thienlm30
  */
 public class FileManagement {
-
+    
+    /**
+     * This function load data of Object to file
+     * Can be reuse in other project
+     * @param <T> Object type
+     * @param list list Object
+     * @param fileName
+     * @return 
+     */
     public static <T> boolean loadFromFile(List<T> list, String fileName) {
         list.clear();
         File f = new File(fileName);
@@ -56,7 +64,16 @@ public class FileManagement {
         }
         return true;
     }
-
+    
+    /**
+     * This function save Object to file
+     * Can be reuse in other project
+     * @param <T> Object type
+     * @param list list Object
+     * @param fileName
+     * @param msg
+     * @return 
+     */
     public static <T> boolean saveToFile(List<T> list, String fileName, String msg) {
 
         try {

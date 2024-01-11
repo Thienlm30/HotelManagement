@@ -4,6 +4,10 @@ package Bussiness.Components;
 import Bussiness.DTO.Hotel;
 import java.util.List;
 
+/**
+ * This class contain function to search Hotel 
+ * @author Thienlm30
+ */
 public class SearchData {
     
     // true: exit

@@ -28,7 +28,11 @@ public class HotelService implements IHotelService {
             addHotel();
         }
     }
-
+    
+    /**
+     * This function will add new Hotel to file
+     * If Hotel_id already exit -> Error: ID duplicated
+     */
     @Override
     public void addHotel() {
         String id, name, address, phone;
@@ -46,7 +50,9 @@ public class HotelService implements IHotelService {
         } while (MyUitil.getYN("Do you want to add new Hotel? (Y/N): "));
     }
 
-    // check by ID
+    /**
+     * This function check if Hotel exit or not by Hotel_id from User
+     */
     @Override
     public void checkExitHotel() {
         String id;
@@ -61,6 +67,10 @@ public class HotelService implements IHotelService {
         } while (MyUitil.getYN("Do you want to search hotel? (Y/N): "));
     }
 
+    /**
+     * This function allow User update information of Hotel
+     * If new information is blank, then do not update
+     */
     @Override
     public void updateHotel() {
         String id, name, address, phone, roomS, rateS;
@@ -130,6 +140,10 @@ public class HotelService implements IHotelService {
 
     }
 
+    /**
+     * This function allow User delete Hotel information
+     * And ask to sure that User want to delete
+     */
     @Override
     public void deleteHotel() {
         String id;
@@ -144,6 +158,10 @@ public class HotelService implements IHotelService {
         }
     }
 
+    /**
+     * This function is a sub-menu
+     * This allow User search Hotel information by ID or Name
+     */
     @Override
     public void searchHotel() {
         Menu menu = new Menu("Searching Hotel");
@@ -151,7 +169,6 @@ public class HotelService implements IHotelService {
         menu.addOption("Searching by Hotel_name");
         menu.addOption("Quit");
 
-        
         int choice;
         do {
             menu.printMenu();
@@ -192,6 +209,9 @@ public class HotelService implements IHotelService {
 
     }
 
+    /**
+     * This function will display all Hotel information and desc by Name
+     */
     @Override
     public void display() {
         try {
@@ -206,12 +226,21 @@ public class HotelService implements IHotelService {
         listFile.sort((h1, h2) -> h2.getName().compareToIgnoreCase(h1.getName()));
         printFormat(listFile);
     }
-
-    public void saveToFile() {
+    
+    /**
+     * This function only use for this class
+     * This will save data from list to file
+     */
+    private void saveToFile() {
         HotelDAO.saveToFile(listFile, pathFile, "Saved to file successfully!");
         //h.loadFromFile(listFile, pathFile);
     }
-
+    
+    /**
+     * This function only use for this class 
+     * This will print all Hotel information from parameter list
+     * @param list list of Hotel to print
+     */
     private void printFormat(List<Hotel> list) {
         for (int i = 0; i < 118; i++) {
             System.out.printf("-");

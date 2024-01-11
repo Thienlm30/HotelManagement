@@ -4,8 +4,12 @@ package Bussiness.DTO;
 import java.io.Serializable;
 
 
-// implement Serializable to be written to an "ObjectOutputStream" 
-// in FileManagement class in Bussiness.Service package
+
+/**
+ * This class is model or data object transfer
+ * Implement Serializable to be written to an "ObjectOutputStream"
+ * @author Thienlm30
+ */
 public class Hotel implements Serializable, Comparable<Hotel>{
     
     private String id;
