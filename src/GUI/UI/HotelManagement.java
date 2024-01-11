@@ -17,7 +17,7 @@ public class HotelManagement {
         menu.addOption("Displaying a hotel list (descending by Hotel_Name)");
         menu.addOption("Others Quit");
         
-        HotelService h = new HotelService("./Hotel.dat");
+        HotelService h = new HotelService("Hotel.dat");
         
         int choice;
         do {

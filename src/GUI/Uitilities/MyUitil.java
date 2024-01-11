@@ -56,7 +56,11 @@ public class MyUitil {
 
     }
 
-    // return String without extra space
+    /**
+     * This function will remove extra space
+     * @param string
+     * @return 
+     */
     public static String normolizeStr(String string) {
         string = string.trim();
         String[] tokens = string.split("//s+");

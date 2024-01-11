@@ -153,7 +153,7 @@ public class HotelService implements IHotelService {
     public void display() {
         HotelDAO h = new HotelDAO();
         try {
-            h.loadFromFile(listFile, "Hotel.dat");
+            h.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
