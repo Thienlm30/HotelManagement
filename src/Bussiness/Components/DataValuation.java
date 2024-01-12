@@ -14,7 +14,11 @@ import java.util.Scanner;
 public class DataValuation {
     
     public static Scanner sc = new Scanner(System.in);
-    
+    /**
+     * This function allow User enter Hotel_id and check if exit or not
+     * @param listFile
+     * @return Hotel_id
+     */
     public static String inputID(List<Hotel> listFile) {
         String id = "";
         try {
@@ -28,8 +32,14 @@ public class DataValuation {
         return id;
     }
     
+    /**
+     * This function allow User enter Hotel_name
+     * And remove extra space in name
+     * @return 
+     */
     public static String inputName() {
-        return MyUitil.getNonBlankString("Enter hotel name: ", "Name cannot blank");
+        return MyUitil.normolizeStr(MyUitil.getNonBlankString("Enter hotel name: ", 
+                "Name cannot blank"));
     }
     
     public static int inputRoom() {
@@ -37,9 +47,14 @@ public class DataValuation {
                 "Number of room can less than zero", 0);
     }
     
+    /**
+     * This function allow User enter Hotel_address
+     * And remove extra space in address
+     * @return 
+     */
     public static String inputAddress() {
-        return MyUitil.getNonBlankString("Enter hotel address: ",
-                "Address cannot blank");
+        return MyUitil.normolizeStr(MyUitil.getNonBlankString("Enter hotel address: ",
+                "Address cannot blank"));
     }
     
     public static String inputPhone() {

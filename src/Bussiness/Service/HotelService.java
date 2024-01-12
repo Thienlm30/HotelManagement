@@ -198,7 +198,7 @@ public class HotelService implements IHotelService {
                        if (h.getName().toLowerCase().contains(name.toLowerCase())) 
                            listBuffer.add(h);
                     }
-                    listBuffer.sort((h1,h2) -> h2.getId().compareToIgnoreCase(h1.getId()));
+                    listBuffer.sort((h2,h1) -> h2.getId().compareToIgnoreCase(h1.getId()));
                     printFormat(listBuffer);
                     break;
                 default:

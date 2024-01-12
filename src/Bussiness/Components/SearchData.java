@@ -10,14 +10,25 @@ import java.util.List;
  */
 public class SearchData {
     
-    // true: exit
+    /**
+     * 
+     * @param listFile
+     * @param id
+     * @return True: exit
+     */
     public static boolean searchById(List<Hotel> listFile, String id) {
         for (Hotel h : listFile) {
             if (id.equalsIgnoreCase(h.getId())) return true;
         }
         return false;
     }
-        
+    
+    /**
+     * This function return Object Hotel
+     * @param listFile
+     * @param id
+     * @return 
+     */
     public static Hotel searchHotelById(List<Hotel> listFile, String id) {
         for (Hotel h : listFile) {
             if (h.getId().equalsIgnoreCase(id))
