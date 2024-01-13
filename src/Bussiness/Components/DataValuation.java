@@ -3,7 +3,8 @@ package Bussiness.Components;
 
 
 import Bussiness.DTO.Hotel;
-import GUI.Uitilities.MyUitil;
+import GUI.Utilities.MyUtil;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class DataValuation {
     public static String inputID(List<Hotel> listFile) {
         String id = "";
         try {
-            id = MyUitil.getPatternString("Enter ID like Hxx (x is a number): ", 
+            id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ", 
                     "ID must be Hxx (x is a number)", "H\\d{2}");
             if (SearchData.searchById(listFile, id)) 
                     throw new Exception("ID dulpicated");
@@ -38,12 +39,12 @@ public class DataValuation {
      * @return 
      */
     public static String inputName() {
-        return MyUitil.normolizeStr(MyUitil.getNonBlankString("Enter hotel name: ", 
+        return MyUtil.normolizeStr(MyUtil.getNonBlankString("Enter hotel name: ", 
                 "Name cannot blank"));
     }
     
     public static int inputRoom() {
-        return MyUitil.getInteger("Enter hotel available rom: ", 
+        return MyUtil.getInteger("Enter hotel available rom: ", 
                 "Number of room can less than zero", 0);
     }
     
@@ -53,17 +54,17 @@ public class DataValuation {
      * @return 
      */
     public static String inputAddress() {
-        return MyUitil.normolizeStr(MyUitil.getNonBlankString("Enter hotel address: ",
+        return MyUtil.normolizeStr(MyUtil.getNonBlankString("Enter hotel address: ",
                 "Address cannot blank"));
     }
     
     public static String inputPhone() {
-        return MyUitil.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
+        return MyUtil.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
                 "Phone number must have ten number", "0\\d{9}");
     }
     
     public static int inputRate() {
-        return MyUitil.getInteger("Enter rating (1...6 star): ", 
+        return MyUtil.getInteger("Enter rating (1...6 star): ", 
                 "Rating must an integer from 1 to 6 star", 1, 6);
     }    
     

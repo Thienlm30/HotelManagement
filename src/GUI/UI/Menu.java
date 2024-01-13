@@ -2,7 +2,8 @@
 package GUI.UI;
 
 import java.util.ArrayList;
-import GUI.Uitilities.MyUitil;
+
+import GUI.Utilities.MyUtil;
 
 
 /**
@@ -35,7 +36,7 @@ public class Menu {
         int maxOption = optionList.size();
         String inputMsg = "Choose [1.." + maxOption + "]: ";
         String errorMsg = "You are required to choose the option 1.." + maxOption; 
-        return MyUitil.getInteger(inputMsg, errorMsg, 1, maxOption);
+        return MyUtil.getInteger(inputMsg, errorMsg, 1, maxOption);
     }
     
     /**

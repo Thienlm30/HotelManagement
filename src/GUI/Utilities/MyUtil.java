@@ -1,4 +1,4 @@
-package GUI.Uitilities;
+package GUI.Utilities;
 
 import java.util.Scanner;
 /**
@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Valuation the input data from User
  * @author Thienlm30
  */
-public class MyUitil {
+public class MyUtil {
 
     private static Scanner sc = new Scanner(System.in);
     
