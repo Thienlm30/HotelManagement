@@ -86,7 +86,7 @@ public class MyUtil {
      */
     public static String normolizeStr(String string) {
         string = string.trim();
-        String[] tokens = string.split("//s+");
+        String[] tokens = string.split("\\s+");
         // split string to words
         return String.join(" ", tokens);
     }

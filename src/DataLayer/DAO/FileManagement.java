@@ -25,7 +25,7 @@ public class FileManagement {
      * @param fileName
      * @return 
      */
-    public static <T> boolean loadFromFile(List<T> list, String fileName) {
+    public <T> boolean loadFromFile(List<T> list, String fileName) {
         list.clear();
         File f = new File(fileName);
         if (!f.exists()) {
@@ -74,7 +74,7 @@ public class FileManagement {
      * @param msg
      * @return 
      */
-    public static <T> boolean saveToFile(List<T> list, String fileName, String msg) {
+    public <T> boolean saveToFile(List<T> list, String fileName, String msg) {
 
         try {
 

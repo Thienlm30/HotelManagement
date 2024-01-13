@@ -12,7 +12,7 @@ import java.util.Scanner;
  * This class contain function to call function to input data
  * @author Thienlm30
  */
-public class DataValuation {
+public class DataValidation {
     
     public static Scanner sc = new Scanner(System.in);
     /**

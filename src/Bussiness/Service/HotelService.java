@@ -1,6 +1,6 @@
 package Bussiness.Service;
 
-import Bussiness.Components.DataValuation;
+import Bussiness.Components.DataValidation;
 import Bussiness.Components.SearchData;
 import Bussiness.DTO.Hotel;
 import DataLayer.DAO.HotelDAO;
@@ -12,14 +12,16 @@ import java.util.List;
 
 public class HotelService implements IHotelService {
 
-    //private List<Hotel> listBuffer = new ArrayList<>();
+    // private List<Hotel> listBuffer = new ArrayList<>();
     private List<Hotel> listFile = new ArrayList<>();
     private String pathFile;
+    private HotelDAO hotelDAO = new HotelDAO();
 
     public HotelService(String fileName) {
         this.pathFile = fileName;
+
         try {
-            HotelDAO.loadFromFile(listFile, pathFile);
+            hotelDAO.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -29,7 +31,7 @@ public class HotelService implements IHotelService {
             addHotel();
         }
     }
-    
+
     /**
      * This function will add new Hotel to file
      * If Hotel_id already exit -> Error: ID duplicated
@@ -40,12 +42,12 @@ public class HotelService implements IHotelService {
         int room, rate;
         do {
             System.out.println("Please enter new hotel information!");
-            id = DataValuation.inputID(listFile);
-            name = DataValuation.inputName();
-            room = DataValuation.inputRoom();
-            address = DataValuation.inputAddress();
-            phone = DataValuation.inputPhone();
-            rate = DataValuation.inputRate();
+            id = DataValidation.inputID(listFile);
+            name = DataValidation.inputName();
+            room = DataValidation.inputRoom();
+            address = DataValidation.inputAddress();
+            phone = DataValidation.inputPhone();
+            rate = DataValidation.inputRate();
             listFile.add(new Hotel(id, name, room, address, phone, rate));
             saveToFile();
         } while (MyUtil.getYN("Do you want to add new Hotel? (Y/N): "));
@@ -96,7 +98,7 @@ public class HotelService implements IHotelService {
             } else if (roomS.matches("\\d+")) {
                 room = Integer.parseInt(roomS);
             } else {
-                room = DataValuation.inputRoom();
+                room = DataValidation.inputRoom();
             }
 
             address = MyUtil.getStrCanBlank("Enter new address: ");
@@ -168,39 +170,46 @@ public class HotelService implements IHotelService {
         Menu menu = new Menu("Searching Hotel");
         menu.addOption("Searching by Hotel_id");
         menu.addOption("Searching by Hotel_name");
-        menu.addOption("Quit");
+        menu.addOption("Return to main menu");
 
         int choice;
         do {
             menu.printMenu();
             choice = menu.getChoice();
-            List<Hotel> listBuffer ;
+            List<Hotel> listBuffer;
             switch (choice) {
                 case 1:
-                    String id = MyUtil.getPatternString("Enter ID to search (Hxx): ", 
+                    String id = MyUtil.getPatternString("Enter ID to search (Hxx): ",
                             "ID must be Hxx (x is a number)", "H\\d{2}");
-                    
-                    HotelDAO.loadFromFile(listFile, pathFile);
+
+                    hotelDAO.loadFromFile(listFile, pathFile);
                     listBuffer = new ArrayList<>();
-                    
-                    listBuffer.add(SearchData.searchHotelById(listFile, id));
-                    printFormat(listBuffer);
-                    
+
+                    if (SearchData.searchHotelById(listFile, id) != null) {
+                        listBuffer.add(SearchData.searchHotelById(listFile, id));
+                        printFormat(listBuffer);
+                    } else
+                        System.out.println("No hotel found");
+
                     break;
                 case 2:
                     String name = MyUtil.getNonBlankString("Enter nanme to search: ",
                             "Name can be blank");
                     name = MyUtil.normolizeStr(name);
-                    
-                    listBuffer = new ArrayList<>();           
-                    HotelDAO.loadFromFile(listFile, pathFile);
-                    
+
+                    listBuffer = new ArrayList<>();
+                    hotelDAO.loadFromFile(listFile, pathFile);
+
                     for (Hotel h : listFile) {
-                       if (h.getName().toLowerCase().contains(name.toLowerCase())) 
-                           listBuffer.add(h);
+                        if (h.getName().toLowerCase().contains(name.toLowerCase()))
+                            listBuffer.add(h);
                     }
-                    listBuffer.sort((h2,h1) -> h2.getId().compareToIgnoreCase(h1.getId()));
-                    printFormat(listBuffer);
+                    listBuffer.sort((h2, h1) -> h2.getId().compareToIgnoreCase(h1.getId()));
+
+                    if (listBuffer.size() != 0) {
+                        printFormat(listBuffer);
+                    } else System.out.println("No hotel found");
+
                     break;
                 default:
                     System.out.println("Return to main menu");
@@ -216,7 +225,7 @@ public class HotelService implements IHotelService {
     @Override
     public void display() {
         try {
-            HotelDAO.loadFromFile(listFile, pathFile);
+            hotelDAO.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -227,19 +236,20 @@ public class HotelService implements IHotelService {
         listFile.sort((h1, h2) -> h2.getName().compareToIgnoreCase(h1.getName()));
         printFormat(listFile);
     }
-    
+
     /**
      * This function only use for this class
      * This will save data from list to file
      */
     private void saveToFile() {
-        HotelDAO.saveToFile(listFile, pathFile, "Saved to file successfully!");
-        //h.loadFromFile(listFile, pathFile);
+        hotelDAO.saveToFile(listFile, pathFile, "Saved to file successfully!");
+        // h.loadFromFile(listFile, pathFile);
     }
-    
+
     /**
-     * This function only use for this class 
+     * This function only use for this class
      * This will print all Hotel information from parameter list
+     * 
      * @param list list of Hotel to print
      */
     private void printFormat(List<Hotel> list) {
@@ -249,7 +259,8 @@ public class HotelService implements IHotelService {
         System.out.println("");
         //
         //
-        System.out.printf("| ID |%8s%4s%8s|Room Available|%25s%7s%25s|   Phone  |Rating|\n", " ", "Name", " ", " ", "Address", " ", "Phone", "Rating");
+        System.out.printf("| ID |%8s%4s%8s|Room Available|%25s%7s%25s|   Phone  |Rating|\n", " ", "Name", " ", " ",
+                "Address", " ", "Phone", "Rating");
         for (int i = 0; i < 118; i++) {
             System.out.printf("-");
         }

@@ -9,6 +9,8 @@ import java.util.List;
  * @author Thienlm30
  */
 public class HotelDAO {
+
+    private FileManagement fm = new FileManagement();
     
     /**
      * This function load data of Hotel from file
@@ -16,9 +18,9 @@ public class HotelDAO {
      * @param fileName
      * @return 
      */
-    public static boolean loadFromFile(List<Hotel> list ,String fileName){
+    public boolean loadFromFile(List<Hotel> list ,String fileName){
         //listFile.clear();
-        return FileManagement.loadFromFile(list, fileName);
+        return fm.loadFromFile(list, fileName);
     }
     
     /**
@@ -28,8 +30,8 @@ public class HotelDAO {
      * @param msg
      * @return 
      */
-    public static boolean saveToFile(List<Hotel> list, String fileName, String msg){
-        return FileManagement.saveToFile(list, fileName, msg);
+    public boolean saveToFile(List<Hotel> list, String fileName, String msg){
+        return fm.saveToFile(list, fileName, msg);
     }
     
     

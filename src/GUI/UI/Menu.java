@@ -19,6 +19,7 @@ public class Menu {
     public Menu(String menuTitle) {
         this.menuTitle = menuTitle;
     }
+
     /**
      * This function add option of Menu to the optionList
      * @param newOption developer will add option in main function
@@ -36,6 +37,7 @@ public class Menu {
         int maxOption = optionList.size();
         String inputMsg = "Choose [1.." + maxOption + "]: ";
         String errorMsg = "You are required to choose the option 1.." + maxOption; 
+        // User must enter choice between 1 and maxOption
         return MyUtil.getInteger(inputMsg, errorMsg, 1, maxOption);
     }
     
@@ -77,7 +79,7 @@ public class Menu {
     
     /**
      * This function will support the printMenu function
-     * This will print the top and the end of Menu board
+     * This will print regax after option
      * @param str
      * @param regax 
      */
