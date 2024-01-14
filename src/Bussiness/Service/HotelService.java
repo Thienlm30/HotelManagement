@@ -16,6 +16,9 @@ public class HotelService implements IHotelService {
     private List<Hotel> listFile = new ArrayList<>();
     private String pathFile;
     private HotelDAO hotelDAO = new HotelDAO();
+    private DataValidation dataValidation = new DataValidation();
+    private SearchData searchData = new SearchData();
+
 
     public HotelService(String fileName) {
         this.pathFile = fileName;
@@ -42,12 +45,12 @@ public class HotelService implements IHotelService {
         int room, rate;
         do {
             System.out.println("Please enter new hotel information!");
-            id = DataValidation.inputID(listFile);
-            name = DataValidation.inputName();
-            room = DataValidation.inputRoom();
-            address = DataValidation.inputAddress();
-            phone = DataValidation.inputPhone();
-            rate = DataValidation.inputRate();
+            id = dataValidation.inputID(listFile);
+            name = dataValidation.inputName();
+            room = dataValidation.inputRoom();
+            address = dataValidation.inputAddress();
+            phone = dataValidation.inputPhone();
+            rate = dataValidation.inputRate();
             listFile.add(new Hotel(id, name, room, address, phone, rate));
             saveToFile();
         } while (MyUtil.getYN("Do you want to add new Hotel? (Y/N): "));
@@ -62,7 +65,7 @@ public class HotelService implements IHotelService {
         do {
             id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ",
                     "ID must be Hxx (x is a number)", "H\\d{2}");
-            if (!SearchData.searchById(listFile, id)) {
+            if (!searchData.searchById(listFile, id)) {
                 System.out.println("No Hotel Found!");
             } else {
                 System.out.println("Exist  Hotel");
@@ -80,10 +83,10 @@ public class HotelService implements IHotelService {
         int room, rate;
         id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
-        if (!SearchData.searchById(listFile, id)) {
+        if (!searchData.searchById(listFile, id)) {
             System.out.println("No Hotel Found!");
         } else {
-            Hotel h = SearchData.searchHotelById(listFile, id);
+            Hotel h = searchData.searchHotelById(listFile, id);
 
             name = MyUtil.getStrCanBlank("Enter new name: ");
             if (name.matches("\\s+") || name.length() == 0) {
@@ -98,7 +101,7 @@ public class HotelService implements IHotelService {
             } else if (roomS.matches("\\d+")) {
                 room = Integer.parseInt(roomS);
             } else {
-                room = DataValidation.inputRoom();
+                room = dataValidation.inputRoom();
             }
 
             address = MyUtil.getStrCanBlank("Enter new address: ");
@@ -128,7 +131,7 @@ public class HotelService implements IHotelService {
                 }
             }
 
-            if (SearchData.searchHotelById(listFile, id) != null) {
+            if (searchData.searchHotelById(listFile, id) != null) {
                 h.setName(name);
                 h.setAddress(address);
                 h.setPhone(phone);
@@ -152,7 +155,7 @@ public class HotelService implements IHotelService {
         String id;
         id = MyUtil.getPatternString("Enter ID like Hxx to delete: ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
-        Hotel h = SearchData.searchHotelById(listFile, id);
+        Hotel h = searchData.searchHotelById(listFile, id);
         if (h == null) {
             System.out.println("No Hotel Found");
         } else if (MyUtil.getYN("Do you ready want to delete this hote? (Y/N)")) {
@@ -185,8 +188,8 @@ public class HotelService implements IHotelService {
                     hotelDAO.loadFromFile(listFile, pathFile);
                     listBuffer = new ArrayList<>();
 
-                    if (SearchData.searchHotelById(listFile, id) != null) {
-                        listBuffer.add(SearchData.searchHotelById(listFile, id));
+                    if (searchData.searchHotelById(listFile, id) != null) {
+                        listBuffer.add(searchData.searchHotelById(listFile, id));
                         printFormat(listBuffer);
                     } else
                         System.out.println("No hotel found");

@@ -16,7 +16,7 @@ public class SearchData {
      * @param id
      * @return True: exit
      */
-    public static boolean searchById(List<Hotel> listFile, String id) {
+    public boolean searchById(List<Hotel> listFile, String id) {
         for (Hotel h : listFile) {
             if (id.equalsIgnoreCase(h.getId())) return true;
         }
@@ -29,7 +29,7 @@ public class SearchData {
      * @param id
      * @return 
      */
-    public static Hotel searchHotelById(List<Hotel> listFile, String id) {
+    public Hotel searchHotelById(List<Hotel> listFile, String id) {
         for (Hotel h : listFile) {
             if (h.getId().equalsIgnoreCase(id))
                 return h;
