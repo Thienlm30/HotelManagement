@@ -1,4 +1,4 @@
-package DataLayer.DAO;
+package DataLayer;
 
 import java.io.EOFException;
 import java.io.File;

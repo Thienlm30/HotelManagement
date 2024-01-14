@@ -3,7 +3,7 @@ package Bussiness.Service;
 import Bussiness.Components.DataValidation;
 import Bussiness.Components.SearchData;
 import Bussiness.DTO.Hotel;
-import DataLayer.DAO.HotelDAO;
+import DataLayer.HotelDAL;
 import GUI.UI.Menu;
 import GUI.Utilities.MyUtil;
 
@@ -15,7 +15,7 @@ public class HotelService implements IHotelService {
     // private List<Hotel> listBuffer = new ArrayList<>();
     private List<Hotel> listFile = new ArrayList<>();
     private String pathFile;
-    private HotelDAO hotelDAO = new HotelDAO();
+    private HotelDAL hotelDAL = new HotelDAL();
     private DataValidation dataValidation = new DataValidation();
     private SearchData searchData = new SearchData();
 
@@ -24,7 +24,7 @@ public class HotelService implements IHotelService {
         this.pathFile = fileName;
 
         try {
-            hotelDAO.loadFromFile(listFile, pathFile);
+            hotelDAL.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -185,7 +185,7 @@ public class HotelService implements IHotelService {
                     String id = MyUtil.getPatternString("Enter ID to search (Hxx): ",
                             "ID must be Hxx (x is a number)", "H\\d{2}");
 
-                    hotelDAO.loadFromFile(listFile, pathFile);
+                    hotelDAL.loadFromFile(listFile, pathFile);
                     listBuffer = new ArrayList<>();
 
                     if (searchData.searchHotelById(listFile, id) != null) {
@@ -201,7 +201,7 @@ public class HotelService implements IHotelService {
                     name = MyUtil.normolizeStr(name);
 
                     listBuffer = new ArrayList<>();
-                    hotelDAO.loadFromFile(listFile, pathFile);
+                    hotelDAL.loadFromFile(listFile, pathFile);
 
                     for (Hotel h : listFile) {
                         if (h.getName().toLowerCase().contains(name.toLowerCase()))
@@ -228,7 +228,7 @@ public class HotelService implements IHotelService {
     @Override
     public void display() {
         try {
-            hotelDAO.loadFromFile(listFile, pathFile);
+            hotelDAL.loadFromFile(listFile, pathFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -245,7 +245,7 @@ public class HotelService implements IHotelService {
      * This will save data from list to file
      */
     private void saveToFile() {
-        hotelDAO.saveToFile(listFile, pathFile, "Saved to file successfully!");
+        hotelDAL.saveToFile(listFile, pathFile, "Saved to file successfully!");
         // h.loadFromFile(listFile, pathFile);
     }
 

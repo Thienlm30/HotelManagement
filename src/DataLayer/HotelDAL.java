@@ -1,14 +1,15 @@
 
-package DataLayer.DAO;
+package DataLayer;
 
 import Bussiness.DTO.Hotel;
+
 import java.util.List;
 
 /**
  * This class contain function to access data of Hotel in file
  * @author Thienlm30
  */
-public class HotelDAO {
+public class HotelDAL {
 
     private FileManagement fm = new FileManagement();
     
