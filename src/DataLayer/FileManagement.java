@@ -54,12 +54,12 @@ public class FileManagement {
             return false;
         } catch (IOException | ClassNotFoundException e) {
             if (f.length() != 0) {
-                System.err.println("Error reading from file: " + fileName + " " + e);
+                System.err.println("Error reading from file: " + fileName + " " + e.getMessage());
                 return false;
             }
         } catch (NumberFormatException e) {
             // log error or throw exception
-            System.err.println("Error parsing double value from input: " + e.getMessage());
+            System.err.println(e.getMessage());
             return false;
         }
         return true;
@@ -93,7 +93,7 @@ public class FileManagement {
                 fileOut.close();
                 fos.close();
                 System.out.println(msg);
-                return true; // Indicates a successful save
+                return true; //successful save
             }
         } catch (IOException e) {
             System.out.println(e);

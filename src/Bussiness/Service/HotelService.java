@@ -245,7 +245,6 @@ public class HotelService implements IHotelService {
      */
     private void saveToFile() {
         hotelDAL.saveToFile(listFile, pathFile, "Saved to file successfully!");
-        // h.loadFromFile(listFile, pathFile);
     }
 
     /**
