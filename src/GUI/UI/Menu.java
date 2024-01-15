@@ -3,7 +3,8 @@ package GUI.UI;
 
 import java.util.ArrayList;
 
-import GUI.Utilities.MyUtil;
+import GUI.Utilities.DataInputter;
+
 
 
 /**
@@ -38,7 +39,7 @@ public class Menu {
         String inputMsg = "Choose [1.." + maxOption + "]: ";
         String errorMsg = "You are required to choose the option 1.." + maxOption; 
         // User must enter choice between 1 and maxOption
-        return MyUtil.getInteger(inputMsg, errorMsg, 1, maxOption);
+        return DataInputter.getInteger(inputMsg, errorMsg, 1, maxOption);
     }
     
     /**

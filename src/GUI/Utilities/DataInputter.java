@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Valuation the input data from User
  * @author Thienlm30
  */
-public class MyUtil {
+public class DataInputter {
 
     private static Scanner sc = new Scanner(System.in);
     

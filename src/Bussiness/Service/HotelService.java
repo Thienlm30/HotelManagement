@@ -5,7 +5,7 @@ import Bussiness.Components.SearchData;
 import Bussiness.DTO.Hotel;
 import DataLayer.HotelDAL;
 import GUI.UI.Menu;
-import GUI.Utilities.MyUtil;
+import GUI.Utilities.DataInputter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class HotelService implements IHotelService {
             rate = dataValidation.inputRate();
             listFile.add(new Hotel(id, name, room, address, phone, rate));
             saveToFile();
-        } while (MyUtil.getYN("Do you want to add new Hotel? (Y/N): "));
+        } while (DataInputter.getYN("Do you want to add new Hotel? (Y/N): "));
     }
 
     /**
@@ -63,14 +63,14 @@ public class HotelService implements IHotelService {
     public void checkExitHotel() {
         String id;
         do {
-            id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ",
+            id = DataInputter.getPatternString("Enter ID like Hxx (x is a number): ",
                     "ID must be Hxx (x is a number)", "H\\d{2}");
             if (!searchData.searchById(listFile, id)) {
                 System.out.println("No Hotel Found!");
             } else {
                 System.out.println("Exist  Hotel");
             }
-        } while (MyUtil.getYN("Do you want to search hotel? (Y/N): "));
+        } while (DataInputter.getYN("Do you want to search hotel? (Y/N): "));
     }
 
     /**
@@ -81,21 +81,21 @@ public class HotelService implements IHotelService {
     public void updateHotel() {
         String id, name, address, phone, roomS, rateS;
         int room, rate;
-        id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ",
+        id = DataInputter.getPatternString("Enter ID like Hxx (x is a number): ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
         if (!searchData.searchById(listFile, id)) {
             System.out.println("No Hotel Found!");
         } else {
             Hotel h = searchData.searchHotelById(listFile, id);
 
-            name = MyUtil.getStrCanBlank("Enter new name: ");
+            name = DataInputter.getStrCanBlank("Enter new name: ");
             if (name.matches("\\s+") || name.length() == 0) {
                 name = h.getName();
             } else {
-                name = MyUtil.normolizeStr(name);
+                name = DataInputter.normolizeStr(name);
             }
 
-            roomS = MyUtil.getStrCanBlank("Enter new available room: ");
+            roomS = DataInputter.getStrCanBlank("Enter new available room: ");
             if (roomS.matches("\\s+") || roomS.length() == 0) {
                 room = h.getRoomAvailable();
             } else if (roomS.matches("\\d+")) {
@@ -104,29 +104,29 @@ public class HotelService implements IHotelService {
                 room = dataValidation.inputRoom();
             }
 
-            address = MyUtil.getStrCanBlank("Enter new address: ");
+            address = DataInputter.getStrCanBlank("Enter new address: ");
             if (address.matches("\\s+") || address.length() == 0) {
                 address = h.getAddress();
             } else {
-                address = MyUtil.normolizeStr(address);
+                address = DataInputter.normolizeStr(address);
             }
 
-            phone = MyUtil.getStrCanBlank("Enter new phone: ");
+            phone = DataInputter.getStrCanBlank("Enter new phone: ");
             if (phone.trim().length() == 0) {
                 phone = h.getPhone();
             } else if (!(phone.matches("0\\d{9}"))) {
                 System.err.println("Phone number must have ten number");
-                phone = MyUtil.getPatternString("Enter hotel phone number (0xx... - ten number): ",
+                phone = DataInputter.getPatternString("Enter hotel phone number (0xx... - ten number): ",
                         "Phone number must have ten number", "0\\d{9}");
             }
 
-            rateS = MyUtil.getStrCanBlank("Enter new rate: ");
+            rateS = DataInputter.getStrCanBlank("Enter new rate: ");
             if (rateS.matches("\\s+") || rateS.length() == 0) {
                 rate = h.getRating();
             } else {
                 rate = Integer.parseInt(rateS);
                 if (rate < 1 || rate > 6) {
-                    rate = MyUtil.getInteger("Enter rating (1...6 star): ",
+                    rate = DataInputter.getInteger("Enter rating (1...6 star): ",
                             "Rating must an integer from 1 to 6 star", 1, 6);
                 }
             }
@@ -153,12 +153,12 @@ public class HotelService implements IHotelService {
     @Override
     public void deleteHotel() {
         String id;
-        id = MyUtil.getPatternString("Enter ID like Hxx to delete: ",
+        id = DataInputter.getPatternString("Enter ID like Hxx to delete: ",
                 "ID must be Hxx (x is a number)", "H\\d{2}");
         Hotel h = searchData.searchHotelById(listFile, id);
         if (h == null) {
             System.out.println("No Hotel Found");
-        } else if (MyUtil.getYN("Do you ready want to delete this hote? (Y/N)")) {
+        } else if (DataInputter.getYN("Do you ready want to delete this hote? (Y/N)")) {
             listFile.remove(h);
             saveToFile();
         }
@@ -182,7 +182,7 @@ public class HotelService implements IHotelService {
             List<Hotel> listBuffer;
             switch (choice) {
                 case 1:
-                    String id = MyUtil.getPatternString("Enter ID to search (Hxx): ",
+                    String id = DataInputter.getPatternString("Enter ID to search (Hxx): ",
                             "ID must be Hxx (x is a number)", "H\\d{2}");
 
                     hotelDAL.loadFromFile(listFile, pathFile);
@@ -196,9 +196,9 @@ public class HotelService implements IHotelService {
 
                     break;
                 case 2:
-                    String name = MyUtil.getNonBlankString("Enter nanme to search: ",
+                    String name = DataInputter.getNonBlankString("Enter nanme to search: ",
                             "Name can be blank");
-                    name = MyUtil.normolizeStr(name);
+                    name = DataInputter.normolizeStr(name);
 
                     listBuffer = new ArrayList<>();
                     hotelDAL.loadFromFile(listFile, pathFile);

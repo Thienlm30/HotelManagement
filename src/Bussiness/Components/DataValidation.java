@@ -3,7 +3,7 @@ package Bussiness.Components;
 
 
 import Bussiness.DTO.Hotel;
-import GUI.Utilities.MyUtil;
+import GUI.Utilities.DataInputter;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class DataValidation {
     public String inputID(List<Hotel> listFile) {
         String id = "";
         try {
-            id = MyUtil.getPatternString("Enter ID like Hxx (x is a number): ", 
+            id = DataInputter.getPatternString("Enter ID like Hxx (x is a number): ", 
                     "ID must be Hxx (x is a number)", "H\\d{2}");
             if (searchData.searchById(listFile, id)) 
                     throw new Exception("ID dulpicated");
@@ -40,12 +40,12 @@ public class DataValidation {
      * @return 
      */
     public String inputName() {
-        return MyUtil.normolizeStr(MyUtil.getNonBlankString("Enter hotel name: ", 
+        return DataInputter.normolizeStr(DataInputter.getNonBlankString("Enter hotel name: ", 
                 "Name cannot blank"));
     }
     
     public int inputRoom() {
-        return MyUtil.getInteger("Enter hotel available rom: ", 
+        return DataInputter.getInteger("Enter hotel available rom: ", 
                 "Number of room can less than zero", 0);
     }
     
@@ -55,17 +55,17 @@ public class DataValidation {
      * @return 
      */
     public String inputAddress() {
-        return MyUtil.normolizeStr(MyUtil.getNonBlankString("Enter hotel address: ",
+        return DataInputter.normolizeStr(DataInputter.getNonBlankString("Enter hotel address: ",
                 "Address cannot blank"));
     }
     
     public String inputPhone() {
-        return MyUtil.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
+        return DataInputter.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
                 "Phone number must have ten number", "0\\d{9}");
     }
     
     public int inputRate() {
-        return MyUtil.getInteger("Enter rating (1...6 star): ", 
+        return DataInputter.getInteger("Enter rating (1...6 star): ", 
                 "Rating must an integer from 1 to 6 star", 1, 6);
     }    
     
