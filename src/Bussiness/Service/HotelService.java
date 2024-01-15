@@ -63,7 +63,7 @@ public class HotelService implements IHotelService {
         String id;
         do {
             id = DataInputter.getPatternString("Enter ID like Hxx (x is a number): ",
-                    "ID must be Hxx (x is a number)", "H\\d{2}");
+                    "ID must be Hxx (x is a number)", "[H|h]\\d{2}");
             if (!searchData.searchById(listFile, id)) {
                 System.out.println("No Hotel Found!");
             } else {
@@ -102,7 +102,7 @@ public class HotelService implements IHotelService {
             } else {
                 room = dataValidation.inputRoom();
             }
-
+          
             address = DataInputter.getStrCanBlank("Enter new address: ");
             if (address.matches("\\s+") || address.length() == 0) {
                 address = h.getAddress();
@@ -181,17 +181,22 @@ public class HotelService implements IHotelService {
             List<Hotel> listBuffer;
             switch (choice) {
                 case 1:
-                    String id = DataInputter.getPatternString("Enter ID to search (Hxx): ",
-                            "ID must be Hxx (x is a number)", "H\\d{2}");
+                    String id = DataInputter.getNonBlankString("Enter ID to search (Hxx): ",
+                            "ID cannot blank");
 
                     hotelDAL.loadFromFile(listFile, pathFile);
                     listBuffer = new ArrayList<>();
 
-                    if (searchData.searchHotelById(listFile, id) != null) {
-                        listBuffer.add(searchData.searchHotelById(listFile, id));
+                    for (Hotel h : listFile) {
+                        if (h.getId().toLowerCase().contains(id.toLowerCase()))
+                            listBuffer.add(h);
+                    }
+                    
+                    listBuffer.sort((h1, h2) -> h1.getId().compareToIgnoreCase(h2.getId()));
+                    
+                    if (!listBuffer.isEmpty()) {
                         printFormat(listBuffer);
-                    } else
-                        System.out.println("No hotel found");
+                    } else System.out.println("No hotel found");
 
                     break;
                 case 2:

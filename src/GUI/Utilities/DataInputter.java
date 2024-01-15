@@ -132,22 +132,19 @@ public class DataInputter {
     }
     
     /**
-     * This function get Yes or No from User to continue or not
+     * This function get Yes or Others from User to continue or not
      * @param msg
-     * @return True: Yes; False: No
+     * @return True: Yes; False: Others
      */
     public static boolean getYN(String msg) {
-        String choice;
-        while (true) {
+        String choice; boolean flag=true;
+        while (flag) {
             System.out.print(msg);
             choice = sc.nextLine();
-            if (choice.equalsIgnoreCase("Y")) {
-                return true;
-            } else if (choice.equalsIgnoreCase("N")) {
-                return false;
-            } else {
-                System.err.println("Must be Y or N");
-            }
+            flag= choice.equalsIgnoreCase("Y");
+            //if (!flag)
+            //    System.err.println("Another ");
         }
+        return flag;
     }
 }

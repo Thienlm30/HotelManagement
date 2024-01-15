@@ -22,7 +22,7 @@ public class FileManagement {
      * Can be reuse in other project
      * @param <T> Object type
      * @param list list Object
-     * @param fileName
+     * @param fileName 
      * @return 
      */
     public <T> boolean loadFromFile(List<T> list, String fileName) {
@@ -47,6 +47,10 @@ public class FileManagement {
                     break;
                 }
             }
+            //while (fis.available()>0){
+            //    T c = (T) ois.readObject();
+            //    list.add(c);
+            //}
             ois.close();
             fis.close();
         } catch (FileNotFoundException e) {
