@@ -12,7 +12,6 @@ import java.util.List;
 
 public class HotelService implements IHotelService {
 
-    // private List<Hotel> listBuffer = new ArrayList<>();
     private List<Hotel> listFile = new ArrayList<>();
     private String pathFile;
     private HotelDAL hotelDAL = new HotelDAL();
@@ -207,9 +206,9 @@ public class HotelService implements IHotelService {
                         if (h.getName().toLowerCase().contains(name.toLowerCase()))
                             listBuffer.add(h);
                     }
-                    listBuffer.sort((h2, h1) -> h2.getId().compareToIgnoreCase(h1.getId()));
+                    listBuffer.sort((h1, h2) -> h1.getId().compareToIgnoreCase(h2.getId()));
 
-                    if (listBuffer.size() != 0) {
+                    if (!listBuffer.isEmpty()) {
                         printFormat(listBuffer);
                     } else System.out.println("No hotel found");
 
