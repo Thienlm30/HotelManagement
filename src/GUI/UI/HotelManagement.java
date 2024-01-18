@@ -14,7 +14,7 @@ public class HotelManagement {
         menu.addOption("Updating Hotel information");
         menu.addOption("Deleting Hotel");
         menu.addOption("Searching Hotel");
-        menu.addOption("Displaying a hotel list (descending by Hotel_Namevvvvvvvvvvv)");
+        menu.addOption("Displaying a hotel list (descending by Hotel_Name)");
         menu.addOption("Others Quit");
         
         HotelService h = new HotelService("Hotel.dat");

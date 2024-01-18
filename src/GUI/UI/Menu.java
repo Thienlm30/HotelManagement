@@ -80,7 +80,7 @@ public class Menu {
     
     /**
      * This function will support the printMenu function
-     * This will print regax after option
+     * This will print regex after option
      * @param str
      * @param regax 
      */

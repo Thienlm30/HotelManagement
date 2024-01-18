@@ -61,7 +61,7 @@ public class DataValidation {
     
     public String inputPhone() {
         return DataInputter.getPatternString("Enter hotel phone number (0xx... - ten number): ", 
-                "Phone number must have ten number", "0[(88)|(91)|(94)]\\d{7}");
+                "Phone number must have ten number", "0\\d{2}");
     }
     
     public int inputRate() {

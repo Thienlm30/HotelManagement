@@ -47,7 +47,7 @@ public class FileManagement {
                     break;
                 }
             }
-            //while (fis.available()>0){
+            //while (fis.available()){
             //    T c = (T) ois.readObject();
             //    list.add(c);
             //}
